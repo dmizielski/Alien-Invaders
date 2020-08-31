@@ -1,0 +1,26 @@
+import json
+
+class GameStats:
+    """ Statystyki gry """
+
+    def __init__(self, ai_settings):
+        """ Zainicjalizuj statystyki """
+        self.ai_settings = ai_settings
+        self.reset_stats()
+
+        # Zacznij gre w aktywnym stanie
+        self.game_active = False
+
+        # Zapisz najwyzszy wynik
+        filename = 'score.json'
+        try:
+            with open(filename) as f_obj:
+                self.high_score = json.load(f_obj)
+        except FileNotFoundError:
+            self.high_score = 0
+
+    def reset_stats(self):
+        """ Statystyki ktore ulegaja zmianie w trakcie gry """
+        self.ships_left = self.ai_settings.ship_limit
+        self.score = 0
+        self.level = 1
